@@ -26,17 +26,6 @@ python start.py
 ### 3. Open Your Browser
 The application will automatically open at: **http://localhost:5000**
 
-## 📤 Upload to GitHub
-
-### Option 1: Automated Setup (Recommended)
-```bash
-python setup_github.py
-```
-This universal script will guide you through the entire GitHub upload process for any project.
-
-### Option 2: Manual Setup
-Follow the detailed instructions in [`GITHUB_UPLOAD_GUIDE.md`](GITHUB_UPLOAD_GUIDE.md) for step-by-step GitHub upload instructions.
-
 ## 📁 Project Structure
 
 ```
