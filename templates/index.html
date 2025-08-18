@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOLOv8 Object Detection</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1><i class="fas fa-eye"></i> YOLOv8 Object Detection</h1>
+            <p>Upload an image and let AI identify objects automatically</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <h2><i class="fas fa-upload"></i> Upload Image</h2>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-text">Drag & drop your image here</div>
+                    <div class="upload-hint">or click to browse</div>
+                    <input type="file" id="fileInput" class="file-input" accept="image/*">
+                </div>
+                <button class="upload-btn" id="uploadBtn" disabled>
+                    <i class="fas fa-magic"></i> Detect Objects
+                </button>
+                
+                <!-- Loading Indicator -->
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Processing image with YOLOv8...</p>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section">
+                <div class="results-header">
+                    <h3><i class="fas fa-chart-bar"></i> Detection Results</h3>
+                    <p>Objects found in your image</p>
+                </div>
+
+                <div id="resultsContent">
+                    <div class="upload-hint">
+                        Upload an image to see detection results
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
