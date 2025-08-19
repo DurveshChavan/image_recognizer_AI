@@ -1,5 +1,6 @@
 # 🎯 YOLOv8 Object Detection Web Application
 
+
 A modern, clean web application for AI-powered object detection using YOLOv8. Upload images and get instant object detection results with bounding boxes and confidence scores.
 
 ## ✨ Features
