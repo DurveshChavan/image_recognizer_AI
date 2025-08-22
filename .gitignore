@@ -1,5 +1,5 @@
 # ============================================================================
-# YOLOv10 Web Application .gitignore
+# YOLOv10 Enhanced Web Application .gitignore
 # ============================================================================
 
 # Python
@@ -232,6 +232,39 @@ tmp/
 temp/
 
 # ============================================================================
+# C++ Build Artifacts
+# ============================================================================
+
+# C++ compiled modules
+yolov10_cpp_module.so
+yolov10_cpp_module.pyd
+yolov10_cpp_module.dll
+
+# C++ build directories
+cpp/build/
+cpp/lib/
+cpp/obj/
+cpp/bin/
+
+# C++ object files
+*.o
+*.obj
+*.a
+*.lib
+
+# C++ temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# ============================================================================
 # Project Specific
 # ============================================================================
 
@@ -292,6 +325,10 @@ config_local.yaml
 *.bak
 *.backup
 
+# Installation files
+vs_buildtools.exe
+InstallationLog.txt
+
 # ============================================================================
 # Exceptions (files to keep)
 # ============================================================================
@@ -312,6 +349,14 @@ config_local.yaml
 !web/package-lock.json
 !web/tailwind.config.js
 !web/postcss.config.js
+
+# Keep C++ source files
+!cpp/src/
+!cpp/include/
+!cpp/Makefile
+
+# Keep Python fallback module
+!yolov10_cpp_module.py
 
 # Keep .gitkeep files for empty directories
 !.gitkeep

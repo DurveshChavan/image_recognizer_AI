@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-YOLOv10 Object Detection Web Application
-A clean, organized Flask web application for AI-powered object detection.
+YOLOv10 Object Detection Web Application with C++ Enhancement
+A clean, organized Flask web application for AI-powered object detection with C++ optimizations.
 """
 
 import os
@@ -16,7 +16,18 @@ import sys
 import os
 # Add YOLOv10 directory to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'YOLOv10'))
-from cvat_integration import CVATIntegration
+
+# Import the enhanced service instead of CVAT integration
+try:
+    from yolov10_enhanced_service import EnhancedYOLOv10Service
+    ENHANCED_SERVICE_AVAILABLE = True
+    print("✅ Enhanced YOLOv10 service available")
+except ImportError as e:
+    print(f"⚠️  Enhanced service not available: {e}")
+    # Fallback to original service
+    from yolov10_service import YOLOv10Service
+    ENHANCED_SERVICE_AVAILABLE = False
+    print("   Using standard YOLOv10 service")
 
 # ============================================================================
 # APPLICATION CONFIGURATION
@@ -38,8 +49,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Ensure upload directory exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Global CVAT integration instance
-cvat_integration = None
+# Global YOLO service instance
+yolo_service = None
 
 # ============================================================================
 # UTILITY FUNCTIONS
@@ -51,17 +62,23 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def initialize_yolo():
-    """Initialize YOLO model."""
-    global cvat_integration
-    if cvat_integration is None:
+    """Initialize YOLO model with enhanced service if available."""
+    global yolo_service
+    if yolo_service is None:
         try:
             config_path = os.path.join(os.path.dirname(__file__), '..', 'YOLOv10', 'config.yaml')
-            cvat_integration = CVATIntegration(config_path)
-            cvat_integration.initialize_yolo_service()
-            print("✅ YOLO model initialized successfully")
+            model_path = os.path.join(os.path.dirname(__file__), '..', 'yolov10n.pt')
+            
+            if ENHANCED_SERVICE_AVAILABLE:
+                yolo_service = EnhancedYOLOv10Service(model_path, config_path)
+                print("✅ Enhanced YOLOv10 service initialized successfully")
+            else:
+                yolo_service = YOLOv10Service(model_path, config_path)
+                print("✅ Standard YOLOv10 service initialized successfully")
+            
             return True
         except Exception as e:
-            print(f"❌ Error initializing YOLO model: {e}")
+            print(f"❌ Error initializing YOLO service: {e}")
             return False
     return True
 
@@ -129,7 +146,7 @@ def index():
 
 @app.route('/api/upload', methods=['POST'])
 def upload_file():
-    """Handle file upload and process with YOLOv10."""
+    """Handle file upload and process with enhanced YOLOv10."""
     try:
         # Check if file was uploaded
         if 'file' not in request.files:
@@ -151,29 +168,28 @@ def upload_file():
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
             
-            # Process image with YOLOv10
-            print(f"Processing image: {filepath}")
-            cvat_data = cvat_integration.predict_and_convert(filepath)
+            # Get processing preferences from request
+            use_cpp = request.form.get('use_cpp', 'true').lower() == 'true'
             
-            # Extract detection results
-            annotation = cvat_data['annotations'][0]
-            detections = []
+            # Process image with enhanced YOLOv10
+            print(f"Processing image: {filepath} (C++: {use_cpp})")
             
-            for shape in annotation['shapes']:
-                points = shape['points']
-                if len(points) >= 2:
-                    x1, y1 = points[0]
-                    x2, y2 = points[1]
-                    confidence = shape['attributes'][0]['value']
-                    
-                    detections.append({
-                        'label': shape['label'],
-                        'bbox': [x1, y1, x2, y2],
-                        'confidence': float(confidence)
-                    })
+            # Get image info
+            image_info = yolo_service.get_image_info(filepath)
+            
+            # Perform prediction with enhanced service
+            if ENHANCED_SERVICE_AVAILABLE:
+                detections = yolo_service.predict(filepath, use_cpp=use_cpp)
+            else:
+                detections = yolo_service.predict(filepath)
             
             # Draw detections on image
             annotated_image = draw_detections_on_image(filepath, detections)
+            
+            # Get performance statistics if available
+            performance_stats = {}
+            if ENHANCED_SERVICE_AVAILABLE and hasattr(yolo_service, 'performance_stats'):
+                performance_stats = yolo_service.performance_stats
             
             # Prepare response
             response = {
@@ -184,9 +200,12 @@ def upload_file():
                 'detections': detections,
                 'summary': {
                     'total_objects': len(detections),
-                    'image_size': f"{annotation['width']}x{annotation['height']}",
-                    'processing_time': '~1-2 seconds'
-                }
+                    'image_size': f"{image_info['width']}x{image_info['height']}",
+                    'processing_time': '~1-2 seconds',
+                    'enhanced_service': ENHANCED_SERVICE_AVAILABLE,
+                    'cpp_used': use_cpp if ENHANCED_SERVICE_AVAILABLE else False
+                },
+                'performance_stats': performance_stats
             }
             
             return jsonify(response)
@@ -198,25 +217,92 @@ def upload_file():
         print(f"Error processing upload: {e}")
         return jsonify({'error': f'Processing error: {str(e)}'}), 500
 
+@app.route('/api/batch-upload', methods=['POST'])
+def batch_upload():
+    """Handle batch file upload and processing."""
+    try:
+        # Check if files were uploaded
+        if 'files' not in request.files:
+            return jsonify({'error': 'No files provided'}), 400
+        
+        files = request.files.getlist('files')
+        if not files or all(f.filename == '' for f in files):
+            return jsonify({'error': 'No files selected'}), 400
+        
+        # Initialize YOLO if not already done
+        if not initialize_yolo():
+            return jsonify({'error': 'Failed to initialize YOLO model'}), 500
+        
+        # Get processing preferences
+        use_cpp = request.form.get('use_cpp', 'true').lower() == 'true'
+        
+        results = []
+        for file in files:
+            if file and allowed_file(file.filename):
+                # Save uploaded file
+                filename = secure_filename(file.filename)
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                filename = f"{timestamp}_{filename}"
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(filepath)
+                
+                # Process image
+                print(f"Processing batch image: {filepath}")
+                image_info = yolo_service.get_image_info(filepath)
+                
+                if ENHANCED_SERVICE_AVAILABLE:
+                    detections = yolo_service.predict(filepath, use_cpp=use_cpp)
+                else:
+                    detections = yolo_service.predict(filepath)
+                
+                results.append({
+                    'filename': filename,
+                    'detections': detections,
+                    'image_size': f"{image_info['width']}x{image_info['height']}",
+                    'object_count': len(detections)
+                })
+        
+        return jsonify({
+            'success': True,
+            'results': results,
+            'total_files': len(results),
+            'enhanced_service': ENHANCED_SERVICE_AVAILABLE
+        })
+        
+    except Exception as e:
+        print(f"Error processing batch upload: {e}")
+        return jsonify({'error': f'Batch processing error: {str(e)}'}), 500
+
 @app.route('/api/health', methods=['GET'])
 def health_check():
-    """Health check endpoint."""
+    """Health check endpoint with enhanced service status."""
+    performance_stats = {}
+    if yolo_service and ENHANCED_SERVICE_AVAILABLE and hasattr(yolo_service, 'performance_stats'):
+        performance_stats = yolo_service.performance_stats
+    
     return jsonify({
         'status': 'healthy',
-        'yolo_initialized': cvat_integration is not None,
+        'yolo_initialized': yolo_service is not None,
+        'enhanced_service': ENHANCED_SERVICE_AVAILABLE,
+        'performance_stats': performance_stats,
         'timestamp': datetime.now().isoformat()
     })
+
+@app.route('/api/performance', methods=['GET'])
+def get_performance_stats():
+    """Get performance statistics from the enhanced service."""
+    if not yolo_service or not ENHANCED_SERVICE_AVAILABLE:
+        return jsonify({'error': 'Enhanced service not available'}), 404
+    
+    if hasattr(yolo_service, 'performance_stats'):
+        return jsonify(yolo_service.performance_stats)
+    else:
+        return jsonify({'error': 'Performance stats not available'}), 404
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     """Serve uploaded files."""
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-
-
-
-
-
 
 @app.route('/<path:path>')
 def serve_react(path):
@@ -240,12 +326,16 @@ def serve_react(path):
 # ============================================================================
 
 if __name__ == '__main__':
-    print("🚀 Starting YOLOv10 Web Application...")
-    print("=" * 50)
+    print("🚀 Starting Enhanced YOLOv10 Web Application...")
+    print("=" * 60)
     
     # Initialize YOLO model on startup
     if initialize_yolo():
         print("✅ Backend ready!")
+        if ENHANCED_SERVICE_AVAILABLE:
+            print("🚀 C++ enhancements enabled for optimal performance")
+        else:
+            print("⚠️  Using standard service (C++ enhancements not available)")
         print("🌐 Starting web server...")
         app.run(debug=True, host='0.0.0.0', port=5000)
     else:

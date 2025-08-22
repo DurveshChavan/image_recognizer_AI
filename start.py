@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """
-YOLOv10 Web Application Startup Script
-Simple and clean startup script for the object detection web app.
+YOLOv10 Enhanced Web Application Startup Script
+Simple and clean startup script with C++ enhancements for the object detection web app.
 """
 
 import os
 import sys
 import webbrowser
 import time
+import subprocess
+from pathlib import Path
 
 def check_dependencies():
     """Check if all required dependencies are available."""
@@ -20,7 +22,8 @@ def check_dependencies():
         'opencv-python': 'cv2',
         'Pillow': 'PIL',
         'pyyaml': 'yaml',
-        'ultralytics': 'ultralytics'
+        'ultralytics': 'ultralytics',
+        'pybind11': 'pybind11'
     }
     
     missing_packages = []
@@ -40,6 +43,32 @@ def check_dependencies():
     
     print("✅ All dependencies are available!")
     return True
+
+def build_cpp_components():
+    """Build C++ enhancement components."""
+    print("\n🔧 Building C++ enhancement components...")
+    
+    try:
+        # Run the C++ build script
+        result = subprocess.run([sys.executable, 'build_cpp.py'], 
+                              capture_output=True, text=True, timeout=300)
+        
+        if result.returncode == 0:
+            print("✅ C++ components built successfully!")
+            return True
+        else:
+            print(f"⚠️  C++ build failed: {result.stderr}")
+            print("   Continuing with Python-only mode...")
+            return False
+            
+    except subprocess.TimeoutExpired:
+        print("⚠️  C++ build timed out")
+        print("   Continuing with Python-only mode...")
+        return False
+    except Exception as e:
+        print(f"⚠️  C++ build error: {e}")
+        print("   Continuing with Python-only mode...")
+        return False
 
 def check_react_setup():
     """Check React frontend setup."""
@@ -141,20 +170,49 @@ def download_model():
         print(f"❌ Error downloading YOLOv10 model: {e}")
         return False
 
+def check_enhanced_service():
+    """Check if enhanced service is available."""
+    print("\n🚀 Checking Enhanced YOLOv10 Service...")
+    
+    try:
+        # Try to import the enhanced service
+        sys.path.insert(0, os.path.join(os.getcwd(), 'YOLOv10'))
+        from yolov10_enhanced_service import EnhancedYOLOv10Service
+        
+        # Test the service
+        service = EnhancedYOLOv10Service()
+        print("  ✅ Enhanced YOLOv10 service available")
+        return True
+        
+    except ImportError as e:
+        print(f"  ⚠️  Enhanced service not available: {e}")
+        print("   Will use standard YOLOv10 service")
+        return False
+    except Exception as e:
+        print(f"  ⚠️  Enhanced service error: {e}")
+        print("   Will use standard YOLOv10 service")
+        return False
+
 def main():
     """Main startup function."""
-    print("🚀 YOLOv10 Web Application")
-    print("=" * 40)
+    print("🚀 YOLOv10 Enhanced Web Application")
+    print("=" * 50)
     
     # Check dependencies
     if not check_dependencies():
         print("\n❌ Cannot start application due to missing dependencies.")
         return False
     
+    # Build C++ components
+    cpp_available = build_cpp_components()
+    
     # Check files
     if not check_files():
         print("\n❌ Cannot start application due to missing files.")
         return False
+    
+    # Check enhanced service
+    enhanced_available = check_enhanced_service()
     
     # Check React setup (optional but recommended)
     react_ready = check_react_setup()
@@ -164,10 +222,17 @@ def main():
         print("   Or manually: cd web && npm install && npm run build")
     
     print("\n✅ All checks passed!")
-    print("\n🌐 Starting web application...")
+    
+    # Show status
+    print("\n📊 Application Status:")
+    print(f"  🚀 C++ Enhancements: {'✅ Available' if cpp_available else '⚠️  Python-only mode'}")
+    print(f"  🔧 Enhanced Service: {'✅ Available' if enhanced_available else '⚠️  Standard service'}")
+    print(f"  ⚛️  React Frontend: {'✅ Ready' if react_ready else '⚠️  Development mode'}")
+    
+    print("\n🌐 Starting enhanced web application...")
     print("📱 The application will be available at: http://localhost:5000")
     print("🔄 Press Ctrl+C to stop the server")
-    print("=" * 40)
+    print("=" * 50)
     
     # Wait a moment for user to read
     time.sleep(2)

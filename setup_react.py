@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Setup script for React Frontend
-This script installs React dependencies and builds the frontend.
+Setup script for React Frontend with C++ Enhancement Support
+This script installs React dependencies and builds the frontend with C++ awareness.
 """
 
 import os
@@ -41,6 +41,33 @@ def check_node_npm():
     print(f"✅ npm: {npm_version}")
     
     return True
+
+def check_cpp_enhancements():
+    """Check C++ enhancement status."""
+    print("\n🔧 Checking C++ Enhancement Status...")
+    
+    # Check if C++ build script exists
+    if os.path.exists('build_cpp.py'):
+        print("  ✅ C++ build script found")
+        
+        # Check if cpp directory exists
+        if os.path.exists('cpp'):
+            print("  ✅ C++ source directory found")
+            
+            # Check if C++ module exists
+            if os.path.exists('yolov10_cpp_module.py') or os.path.exists('yolov10_cpp_module.so'):
+                print("  ✅ C++ module found")
+                return True
+            else:
+                print("  ⚠️  C++ module not built yet")
+                print("     Will be built automatically when running start.py")
+                return False
+        else:
+            print("  ⚠️  C++ source directory not found")
+            return False
+    else:
+        print("  ⚠️  C++ build script not found")
+        return False
 
 def install_react_dependencies():
     """Install React dependencies."""
@@ -111,14 +138,17 @@ def verify_setup():
 
 def main():
     """Main setup function."""
-    print("🚀 YOLOv10 React Frontend Setup")
-    print("=" * 50)
+    print("🚀 YOLOv10 Enhanced React Frontend Setup")
+    print("=" * 60)
     
     # Check Node.js and npm
     if not check_node_npm():
         print("\n❌ Please install Node.js and npm first.")
         print("Download from: https://nodejs.org/")
         sys.exit(1)
+    
+    # Check C++ enhancements
+    cpp_available = check_cpp_enhancements()
     
     # Install React dependencies
     if not install_react_dependencies():
@@ -135,16 +165,35 @@ def main():
         print("\n❌ Setup verification failed.")
         sys.exit(1)
     
-    print("\n🎉 React frontend setup completed successfully!")
-    print("=" * 50)
-    print("The React app has been built and is ready to be served by Flask.")
-    print("\nTo start the application:")
+    print("\n🎉 Enhanced React frontend setup completed successfully!")
+    print("=" * 60)
+    
+    # Show status
+    print("\n📊 Setup Status:")
+    print(f"  ⚛️  React Frontend: ✅ Ready")
+    print(f"  🔧 C++ Enhancements: {'✅ Available' if cpp_available else '⚠️  Not configured'}")
+    print(f"  🌐 Web Interface: ✅ Built and ready")
+    
+    print("\nThe React app has been built and is ready to be served by Flask.")
+    print("\n🚀 To start the enhanced application:")
     print("  python start.py")
     print("\nThe application will be available at: http://localhost:5000")
-    print("\nFor development (optional):")
+    print("\n📱 Enhanced Features Available:")
+    print("  • Object detection with YOLOv10")
+    print("  • Performance monitoring and statistics")
+    print("  • Batch image processing")
+    print("  • C++ acceleration (when available)")
+    print("  • Modern React UI")
+    
+    print("\n🔧 For development (optional):")
     print("  cd web")
     print("  npm start")
     print("\nThis will start the React development server on http://localhost:3000")
+    
+    if not cpp_available:
+        print("\n💡 To enable C++ enhancements:")
+        print("  python build_cpp.py")
+        print("  python start.py")
 
 if __name__ == "__main__":
     main()
