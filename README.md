@@ -1,172 +1,216 @@
-# 🎯 YOLOv8 Object Detection Web Application
+# 🚀 YOLOv10 Object Detection Web App
 
-A modern, clean web application for AI-powered object detection using YOLOv8. Upload images and get instant object detection results with bounding boxes and confidence scores.
+A modern full-stack web application for AI-powered object detection using YOLOv10, featuring a beautiful React frontend and Flask backend.
 
 ## ✨ Features
 
-- **🎨 Beautiful UI**: Modern, responsive design with drag-and-drop functionality
-- **🤖 AI-Powered**: YOLOv8 object detection with 80+ COCO dataset classes
-- **⚡ Real-time**: Fast processing with visual feedback
-- **📱 Mobile-friendly**: Works perfectly on all devices
-- **🔍 Visual Results**: Original vs annotated image comparison
-- **📊 Statistics**: Detailed detection information and confidence scores
+- **YOLOv10 Object Detection** - State-of-the-art AI model for real-time object detection
+- **Modern React Frontend** - Beautiful glassmorphism UI with drag & drop upload
+- **Multiple Image Formats** - Supports JPG, PNG, GIF, BMP, TIFF
+- **Real-time Processing** - Live status updates and progress indicators
+- **Responsive Design** - Works perfectly on desktop, tablet, and mobile
+- **Performance Analytics** - Detailed processing metrics and statistics
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **React 18** - Modern React with hooks
+- **Tailwind CSS** - Utility-first CSS framework
+- **Framer Motion** - Smooth animations
+- **React Dropzone** - Drag & drop file uploads
+
+### Backend
+- **Flask** - Python web framework
+- **YOLOv10** - Latest YOLO model for object detection
+- **OpenCV** - Image processing and visualization
+- **Ultralytics** - YOLO model management
 
 ## 🚀 Quick Start
 
-### 1. Install Dependencies
+### Prerequisites
+- Python 3.8+
+- Node.js 16+
+- Git
+
+### Installation
+
+1. **Clone the repository**
 ```bash
+git clone <repository-url>
+cd cv
+```
+
+2. **Set up Python environment**
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+# Windows:
+.venv\Scripts\activate
+# macOS/Linux:
+source .venv/bin/activate
+
+# Install Python dependencies
 pip install -r requirements.txt
 ```
 
-### 2. Start the Application
+3. **Set up React frontend**
+```bash
+# Automatic setup (recommended)
+python setup_react.py
+
+# Or manual setup:
+cd web
+npm install
+npm run build
+cd ..
+```
+
+4. **Start the application**
 ```bash
 python start.py
 ```
 
-### 3. Open Your Browser
-The application will automatically open at: **http://localhost:5000**
-
-## 📤 Upload to GitHub
-
-### Option 1: Automated Setup (Recommended)
-```bash
-python setup_github.py
-```
-This universal script will guide you through the entire GitHub upload process for any project.
-
-### Option 2: Manual Setup
-Follow the detailed instructions in [`GITHUB_UPLOAD_GUIDE.md`](GITHUB_UPLOAD_GUIDE.md) for step-by-step GitHub upload instructions.
+The application will be available at: **http://localhost:5000**
 
 ## 📁 Project Structure
 
 ```
 cv/
-├── app.py                   # Flask web application
-├── start.py                 # Startup script
-├── setup_github.py          # Universal GitHub upload automation script
-├── config.yaml             # YOLOv8 configuration
-├── yolov8n.pt             # Pre-trained YOLOv8 model
-├── requirements.txt        # Python dependencies
-├── README.md              # This file
-├── LICENSE                # MIT License
-├── .gitignore             # Git ignore rules
-├── GITHUB_UPLOAD_GUIDE.md # Universal GitHub upload instructions
-├── templates/
-│   └── index.html         # Main web interface
-├── static/
-│   ├── css/
-│   │   └── style.css      # Application styles
-│   └── js/
-│       └── app.js         # Frontend JavaScript
-├── uploads/               # Temporary upload storage
-├── cvat_integration.py    # CVAT format conversion
-└── yolov8_service.py      # YOLOv8 model service
+├── web/                          # React frontend
+│   ├── src/
+│   │   ├── components/           # React components
+│   │   ├── App.js                # Main app component
+│   │   └── index.js              # React entry point
+│   ├── public/                   # Static assets
+│   ├── build/                    # Production build
+│   └── app.py                    # Flask backend
+├── YOLOv10/                      # YOLO model files
+│   ├── config.yaml               # Model configuration
+│   ├── yolov10_service.py        # YOLO service
+│   └── cvat_integration.py       # CVAT integration
+├── uploads/                      # Uploaded images
+├── yolov10n.pt                   # YOLOv10 model file
+├── requirements.txt              # Python dependencies
+├── start.py                      # Main startup script
+└── setup_react.py                # React setup script
 ```
-
-## 🛠️ Technology Stack
-
-### Backend
-- **Flask**: Web framework
-- **YOLOv8**: Object detection model
-- **OpenCV**: Image processing
-- **PyTorch**: Deep learning framework
-
-### Frontend
-- **HTML5**: Semantic markup
-- **CSS3**: Modern styling with gradients and animations
-- **JavaScript (ES6+)**: Interactive functionality
-- **Font Awesome**: Icons
 
 ## 🎯 Usage
 
-1. **Upload Image**: Drag & drop or click to browse
-2. **Process**: Click "Detect Objects" to analyze
-3. **View Results**: See original vs annotated images
-4. **Explore**: Check detection list and statistics
+1. **Upload Image** - Drag & drop or click to upload an image
+2. **Processing** - Watch real-time processing status
+3. **View Results** - See detected objects with confidence scores
+4. **Toggle Views** - Switch between original and annotated images
+5. **Analyze Stats** - Review performance metrics
 
-## 🔧 Configuration
+## 🔧 Development
 
-Edit `config.yaml` to customize detection settings:
-
-```yaml
-# Model settings
-yolov8_model_path: "yolov8n.pt"
-confidence_threshold: 0.5
-iou_threshold: 0.45
-
-# Output settings
-output_format: "cvat"
-```
-
-## 📊 Supported Objects
-
-The application can detect 80+ object classes including:
-- **People**: person
-- **Vehicles**: car, truck, bus, motorcycle, bicycle
-- **Animals**: dog, cat, horse, bird, sheep, cow
-- **Objects**: chair, table, laptop, phone, book
-- **Food**: pizza, hot dog, apple, banana
-- And many more...
-
-## 🚀 Performance
-
-- **YOLOv8n**: ~6ms inference time (CPU)
-- **Total processing**: ~1-2 seconds per image
-- **Real-time upload**: Instant preview
-
-## 🛡️ Security
-
-- File type validation
-- Size limits (16MB max)
-- Secure filename handling
-- Input sanitization
-
-## 📱 Mobile Experience
-
-- Responsive design
-- Touch-friendly interface
-- Optimized for mobile networks
-- Smooth animations
-
-## 🔄 Development
-
-### Running in Development Mode
+### Frontend Development
 ```bash
-python start.py
+cd web
+npm start
+```
+This starts the React development server on http://localhost:3000
+
+### Backend Development
+```bash
+# Activate virtual environment
+.venv\Scripts\activate  # Windows
+source .venv/bin/activate  # macOS/Linux
+
+# Run Flask app directly
+cd web
+python app.py
 ```
 
-### Debug Features
-- Hot reloading
-- Detailed error messages
-- Health check endpoint
+### Building for Production
+```bash
+cd web
+npm run build
+```
 
-## 🐛 Troubleshooting
+## 🎨 Customization
+
+### Styling
+- Modify `web/tailwind.config.js` for theme changes
+- Update `web/src/index.css` for global styles
+
+### Model Configuration
+- Adjust settings in `YOLOv10/config.yaml`
+- Change confidence thresholds and device settings
+
+## 🚀 Deployment
+
+### Production Build
+1. Build React app: `cd web && npm run build`
+2. Ensure all Python dependencies are installed
+3. Configure production settings in Flask app
+4. Use a production WSGI server (Gunicorn, uWSGI)
+
+### Docker Deployment
+```dockerfile
+FROM python:3.9-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+RUN cd web && npm install && npm run build
+EXPOSE 5000
+CMD ["python", "start.py"]
+```
+
+## 🔍 Troubleshooting
 
 ### Common Issues
 
-1. **Model not found**:
-   ```bash
-   python -c "from ultralytics import YOLO; YOLO('yolov8n.pt')"
-   ```
+**React build not found:**
+```bash
+cd web
+npm install
+npm run build
+```
 
-2. **Import errors**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+**YOLO model missing:**
+```bash
+python start.py  # Will auto-download if missing
+```
 
-3. **Port already in use**:
-   Change port in `app.py` or kill existing process
+**Node.js not found:**
+Download and install from https://nodejs.org/
+
+**Python dependencies missing:**
+```bash
+pip install -r requirements.txt
+```
+
+## 📊 Performance
+
+- **Processing Speed**: ~1-2 seconds per image (CPU)
+- **Model Size**: YOLOv10 Nano (~6MB)
+- **Supported Objects**: 80+ COCO classes
+- **Accuracy**: High precision with configurable confidence thresholds
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 🙏 Acknowledgments
 
-- [Ultralytics](https://github.com/ultralytics/ultralytics) for YOLOv8
-- [OpenCV](https://opencv.org/) for image processing
-- [Flask](https://flask.palletsprojects.com/) for web framework
+- **Ultralytics** - YOLOv10 implementation
+- **React Team** - Frontend framework
+- **Tailwind CSS** - Styling framework
+- **Flask** - Backend framework
 
 ---
 
-**Happy detecting! 🎯**
+**Made with ❤️ using YOLOv10 and React**
