@@ -37,7 +37,7 @@ A modern full-stack web application for AI-powered object detection using YOLOv1
 1. **Clone the repository**
 ```bash
 git clone <repository-url>
-cd cv
+cd image_recognizer_AI
 ```
 
 2. **Set up Python environment**
