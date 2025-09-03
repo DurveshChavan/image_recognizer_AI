@@ -27,7 +27,8 @@ function App() {
     try {
       const startTime = Date.now();
       // Call deployed Flask backend
-              const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://yolov10-backend.onrender.com';
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://yolov10-backend.onrender.com';
+      console.log('🌐 Calling backend:', backendUrl);
       const response = await fetch(`${backendUrl}/api/upload`, {
         method: 'POST',
         body: formData,
