@@ -26,6 +26,7 @@ function App() {
 
     try {
       const startTime = Date.now();
+      // Use relative path for Vercel deployment
       const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,

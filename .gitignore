@@ -1,160 +1,33 @@
-# ============================================================================
-# YOLOv10 Web Application .gitignore
-# ============================================================================
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# PyInstaller
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-.pybuilder/
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-Pipfile.lock
-
-# poetry
-poetry.lock
-
-# pdm
-.pdm.toml
-
-# PEP 582
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# PyCharm
-.idea/
-
-# VS Code
-.vscode/
-
-# ============================================================================
-# Node.js / React
-# ============================================================================
-
 # Dependencies
 node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+ENV/
+
+# Build outputs
+web/build/
+web/dist/
+.vercel/
+vercel.json.bak
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
-
-# Production builds
-web/build/
-web/dist/
+*.log
 
 # Runtime data
 pids
@@ -164,40 +37,15 @@ pids
 
 # Coverage directory used by tools like istanbul
 coverage/
-*.lcov
 
 # nyc test coverage
 .nyc_output
 
-# Grunt intermediate storage
-.grunt
-
-# Bower dependency directory
-bower_components
-
-# node-waf configuration
-.lock-wscript
-
-# Compiled binary addons
-build/Release
-
 # Dependency directories
 jspm_packages/
 
-# TypeScript cache
-*.tsbuildinfo
-
 # Optional npm cache directory
 .npm
-
-# Optional eslint cache
-.eslintcache
-
-# Microbundle cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
 
 # Optional REPL history
 .node_repl_history
@@ -208,61 +56,15 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# parcel-bundler cache
-.cache
-.parcel-cache
+# dotenv environment variables file
+.env
 
-# Next.js build output
-.next
-
-# Nuxt.js build / generate output
-.nuxt
-dist
-
-# Gatsby files
-.cache/
-
-
-# Storybook build outputs
-.out
-.storybook-out
-
-# Temporary folders
-tmp/
-temp/
-
-# ============================================================================
-# Project Specific
-# ============================================================================
-
-# YOLOv10 model files (large files)
-*.pt
-*.pth
-*.weights
-
-# Uploaded files
-uploads/
-*.jpg
-*.jpeg
-*.png
-*.gif
-*.bmp
-*.tiff
-*.tif
-
-# Generated annotations
-annotations/
-*.xml
-*.json
-
-# Logs
-logs/
-*.log
-
-# Temporary files
-temp/
-tmp/
-*.tmp
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
 # OS generated files
 .DS_Store
@@ -273,45 +75,8 @@ tmp/
 ehthumbs.db
 Thumbs.db
 
-# Windows
-*.lnk
-
-# ============================================================================
-# Development
-# ============================================================================
-
-# Local configuration
-config_local.yaml
-.env.local
-
-# Database
-*.db
-*.sqlite
-
-# Backup files
-*.bak
-*.backup
-
-# ============================================================================
-# Exceptions (files to keep)
-# ============================================================================
-
-# Keep the main YOLOv10 model for the application
-!yolov10n.pt
-
-# Keep example images for testing
-!example_*.jpg
-!example_*.png
-!test_*.jpg
-!test_*.png
-
-# Keep configuration files
-!config.yaml
-!requirements.txt
-!web/package.json
-!web/package-lock.json
-!web/tailwind.config.js
-!web/postcss.config.js
-
-# Keep .gitkeep files for empty directories
-!.gitkeep
+# Temporary files
+*.tmp
+*.temp
+uploads/
+web/uploads/

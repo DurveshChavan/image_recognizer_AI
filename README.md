@@ -20,19 +20,49 @@ A modern full-stack web application for AI-powered object detection using YOLOv1
 - **React Dropzone** - Drag & drop file uploads
 
 ### Backend
-- **Flask** - Python web framework
+- **Vercel Serverless Functions** - Node.js API endpoints
+- **Formidable.js** - File upload handling
+- **Mock YOLO Detection** - Demo object detection (replaceable with real ML service)
+
+### Local Development
+- **Flask** - Python web framework (for local development only)
 - **YOLOv10** - Latest YOLO model for object detection
 - **OpenCV** - Image processing and visualization
 - **Ultralytics** - YOLO model management
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Option 1: Vercel Deployment (Recommended)
+For production deployment on Vercel:
+
+1. **Install Vercel CLI**
+```bash
+npm install -g vercel
+```
+
+2. **Deploy to Vercel**
+```bash
+# Windows
+deploy-vercel.bat
+
+# PowerShell
+./deploy-vercel.ps1
+
+# Or manually:
+vercel --prod
+```
+
+3. **Your app will be available at**: `https://your-domain.vercel.app`
+
+### Option 2: Local Development
+For local development and testing:
+
+#### Prerequisites
 - Python 3.8+
 - Node.js 16+
 - Git
 
-### Installation
+#### Installation
 
 1. **Clone the repository**
 ```bash
@@ -105,16 +135,29 @@ cv/
 4. **Toggle Views** - Switch between original and annotated images
 5. **Analyze Stats** - Review performance metrics
 
-## 🔧 Development
+## 🚀 Deployment
 
-### Frontend Development
+### Vercel Deployment (Production)
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Deploy
+vercel --prod
+```
+
+For detailed deployment instructions, see [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md)
+
+### Local Development
+
+#### Frontend Development
 ```bash
 cd web
 npm start
 ```
 This starts the React development server on http://localhost:3000
 
-### Backend Development
+#### Backend Development
 ```bash
 # Activate virtual environment
 .venv\Scripts\activate  # Windows

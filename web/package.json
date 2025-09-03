@@ -33,5 +33,9 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "vercel": {
+    "buildCommand": "npm run build",
+    "outputDirectory": "build",
+    "installCommand": "npm install"
+  }
 }
