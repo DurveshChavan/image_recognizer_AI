@@ -27,7 +27,7 @@ function App() {
     try {
       const startTime = Date.now();
       // Call deployed Flask backend
-      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://your-app.railway.app';
+              const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://your-app-name.onrender.com';
       const response = await fetch(`${backendUrl}/api/upload`, {
         method: 'POST',
         body: formData,
