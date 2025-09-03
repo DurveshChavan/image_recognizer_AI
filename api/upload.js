@@ -1,10 +1,6 @@
-import formidable from 'formidable';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const formidable = require('formidable');
+const fs = require('fs');
+const path = require('path');
 
 // Mock YOLO detection for Vercel (since we can't run heavy ML models on serverless)
 // In production, you'd want to use a separate ML service or API

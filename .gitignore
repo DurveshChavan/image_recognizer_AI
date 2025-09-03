@@ -80,3 +80,4 @@ Thumbs.db
 *.temp
 uploads/
 web/uploads/
+.vercel
