@@ -141,26 +141,6 @@ npm run build
 - Adjust settings in `YOLOv10/config.yaml`
 - Change confidence thresholds and device settings
 
-## 🚀 Deployment
-
-### Production Build
-1. Build React app: `cd web && npm run build`
-2. Ensure all Python dependencies are installed
-3. Configure production settings in Flask app
-4. Use a production WSGI server (Gunicorn, uWSGI)
-
-### Docker Deployment
-```dockerfile
-FROM python:3.9-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-RUN cd web && npm install && npm run build
-EXPOSE 5000
-CMD ["python", "start.py"]
-```
-
 ## 🔍 Troubleshooting
 
 ### Common Issues
