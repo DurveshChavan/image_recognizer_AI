@@ -28,7 +28,14 @@ build_dir = os.path.join(web_dir, 'build')
 
 app = Flask(__name__, static_folder=build_dir, static_url_path='')
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
-CORS(app)
+
+# Configure CORS for production
+CORS(app, origins=[
+    "http://localhost:3000",  # Local development
+    "http://localhost:5000",  # Local Flask
+    "https://your-app.vercel.app",  # Your Vercel frontend
+    "https://*.vercel.app"  # Any Vercel subdomain
+])
 
 # File upload configuration
 UPLOAD_FOLDER = 'uploads'

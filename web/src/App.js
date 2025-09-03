@@ -26,8 +26,9 @@ function App() {
 
     try {
       const startTime = Date.now();
-      // Use relative path for Vercel deployment
-      const response = await fetch('/api/upload', {
+      // Call deployed Flask backend
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://your-app.railway.app';
+      const response = await fetch(`${backendUrl}/api/upload`, {
         method: 'POST',
         body: formData,
       });
