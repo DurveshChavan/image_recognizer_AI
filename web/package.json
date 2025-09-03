@@ -32,10 +32,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "vercel": {
-    "buildCommand": "npm run build",
-    "outputDirectory": "build",
-    "installCommand": "npm install"
   }
 }

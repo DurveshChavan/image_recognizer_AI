@@ -1,18 +1,15 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "web/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
+  "functions": {
+    "api/upload.js": {
+      "maxDuration": 30,
+      "memory": 1024
     },
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
+    "api/health.js": {
+      "maxDuration": 10,
+      "memory": 512
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",
@@ -23,11 +20,6 @@
       "dest": "/web/$1"
     }
   ],
-  "functions": {
-    "api/upload.js": {
-      "maxDuration": 30
-    }
-  },
   "env": {
     "NODE_ENV": "production"
   }

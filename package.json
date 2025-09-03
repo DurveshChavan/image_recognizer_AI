@@ -20,5 +20,10 @@
     "react"
   ],
   "author": "Your Name",
-  "license": "MIT"
+  "license": "MIT",
+  "vercel": {
+    "buildCommand": "npm run vercel-build",
+    "outputDirectory": "web/build",
+    "installCommand": "npm install"
+  }
 }
