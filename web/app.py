@@ -33,9 +33,8 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 CORS(app, origins=[
     "http://localhost:3000",  # Local development
     "http://localhost:5000",  # Local Flask
-    "https://image-recognizer-ai.vercel.app/",  # Your Vercel frontend
-    "https://*.vercel.app",  # Any Vercel subdomain
-    "https://*.onrender.com"  # Any Render subdomain
+    "https://your-app.vercel.app",  # Your Vercel frontend
+    "https://*.vercel.app"  # Any Vercel subdomain
 ])
 
 # File upload configuration
