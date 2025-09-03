@@ -187,7 +187,15 @@ def main():
         sys.path.insert(0, os.path.join(os.getcwd(), 'YOLOv10'))
         
         from app import app
-        app.run(debug=True, host='0.0.0.0', port=5000)
+        
+        # Production settings - use environment variable for port
+        port = int(os.environ.get('PORT', 5000))
+        debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
+        
+        print(f"🌍 Server will run on port: {port}")
+        print(f"🐛 Debug mode: {debug_mode}")
+        
+        app.run(debug=debug_mode, host='0.0.0.0', port=port)
     except KeyboardInterrupt:
         print("\n\n🛑 Server stopped by user")
     except Exception as e:
