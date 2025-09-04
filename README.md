@@ -1,6 +1,6 @@
 # 🚀 YOLOv10 Object Detection Web App
 
-A modern full-stack web application for AI-powered object detection using YOLOv10, featuring a beautiful React frontend and Flask backend.
+A modern full-stack web application for AI-powered object detection using YOLOv10, featuring a beautiful React frontend and Flask backend, deployed entirely on Render.com.
 
 ## ✨ Features
 
@@ -25,17 +25,12 @@ A modern full-stack web application for AI-powered object detection using YOLOv1
 - **OpenCV** - Image processing and visualization
 - **Ultralytics** - YOLO model management
 
-### Local Development
-- **Flask** - Python web framework (for local development only)
-- **YOLOv10** - Latest YOLO model for object detection
-- **OpenCV** - Image processing and visualization
-- **Ultralytics** - YOLO model management
-
 ## 🚀 Quick Start
 
 ### Option 1: Render.com Deployment (Recommended)
-For production deployment on Render:
+Your app is already deployed and working at: **`https://yolov10-backend.onrender.com`**
 
+For new deployments:
 1. **Go to [render.com](https://render.com)**
 2. **Sign up/Login** with your GitHub account
 3. **Click "New +" → "Web Service"**
@@ -48,7 +43,6 @@ For production deployment on Render:
 6. **Your app will be available at**: `https://your-app-name.onrender.com`
 
 ### Option 2: Local Development
-For local development and testing:
 
 #### Prerequisites
 - Python 3.8+
@@ -95,7 +89,7 @@ cd ..
 python start.py
 ```
 
-The application will be available at: **http://localhost:5000**
+5. **Open your browser** and go to: `http://localhost:5000`
 
 ## 📁 Project Structure
 
@@ -200,12 +194,28 @@ Download and install from https://nodejs.org/
 pip install -r requirements.txt
 ```
 
-## 📊 Performance
+**Port already in use:**
+```bash
+# Windows
+netstat -ano | findstr :5000
+taskkill /PID <PID> /F
 
-- **Processing Speed**: ~1-2 seconds per image (CPU)
-- **Model Size**: YOLOv10 Nano (~6MB)
-- **Supported Objects**: 80+ COCO classes
-- **Accuracy**: High precision with configurable confidence thresholds
+# macOS/Linux
+lsof -ti:5000 | xargs kill -9
+```
+
+## 🌟 Why Render.com?
+
+- ✅ **Full-stack deployment** - Frontend + Backend in one place
+- ✅ **No CORS issues** - Everything on same domain
+- ✅ **Automatic HTTPS** - Secure by default
+- ✅ **Auto-deploy** - Updates on every Git push
+- ✅ **Free tier** - Perfect for development and testing
+- ✅ **Scalable** - Easy to upgrade as needed
+
+## 📱 Live Demo
+
+**Your app is live at**: [https://yolov10-backend.onrender.com](https://yolov10-backend.onrender.com)
 
 ## 🤝 Contributing
 
@@ -217,15 +227,15 @@ pip install -r requirements.txt
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- **Ultralytics** - YOLOv10 implementation
-- **React Team** - Frontend framework
-- **Tailwind CSS** - Styling framework
-- **Flask** - Backend framework
+- **YOLOv10** - State-of-the-art object detection
+- **Ultralytics** - YOLO model management
+- **Render.com** - Reliable hosting platform
+- **React & Flask** - Amazing frameworks
 
 ---
 
-**Made with ❤️ using YOLOv10 and React**
+**Made with ❤️ for AI-powered object detection**
