@@ -28,7 +28,7 @@ A modern full-stack web application for AI-powered object detection using YOLOv1
 ## 🚀 Quick Start
 
 ### Option 1: Render.com Deployment (Recommended)
-Your app is already deployed and working at: **`https://yolov10-backend.onrender.com`**
+This app is already deployed and working at: **`https://yolov10-backend.onrender.com`**
 
 For new deployments:
 1. **Go to [render.com](https://render.com)**
