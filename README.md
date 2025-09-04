@@ -125,7 +125,7 @@ cv/
 ## 🚀 Deployment
 
 ### Render.com Deployment (Production)
-Your app is already deployed on Render.com at: `https://yolov10-backend.onrender.com`
+This app is already deployed on Render.com at: `https://yolov10-backend.onrender.com`
 
 For new deployments:
 1. **Go to [render.com](https://render.com)**
@@ -238,4 +238,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Made with ❤️ for AI-powered object detection**
+**Made with passion for AI-powered object detection**
