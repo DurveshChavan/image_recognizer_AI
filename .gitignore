@@ -13,8 +13,6 @@ ENV/
 # Build outputs
 web/build/
 web/dist/
-.vercel/
-vercel.json.bak
 
 # Environment variables
 .env
@@ -80,4 +78,3 @@ Thumbs.db
 *.temp
 uploads/
 web/uploads/
-.vercel

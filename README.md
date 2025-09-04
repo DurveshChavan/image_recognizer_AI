@@ -20,9 +20,10 @@ A modern full-stack web application for AI-powered object detection using YOLOv1
 - **React Dropzone** - Drag & drop file uploads
 
 ### Backend
-- **Vercel Serverless Functions** - Node.js API endpoints
-- **Formidable.js** - File upload handling
-- **Mock YOLO Detection** - Demo object detection (replaceable with real ML service)
+- **Flask** - Python web framework with YOLOv10 integration
+- **YOLOv10** - Latest YOLO model for object detection
+- **OpenCV** - Image processing and visualization
+- **Ultralytics** - YOLO model management
 
 ### Local Development
 - **Flask** - Python web framework (for local development only)
@@ -32,27 +33,19 @@ A modern full-stack web application for AI-powered object detection using YOLOv1
 
 ## 🚀 Quick Start
 
-### Option 1: Vercel Deployment (Recommended)
-For production deployment on Vercel:
+### Option 1: Render.com Deployment (Recommended)
+For production deployment on Render:
 
-1. **Install Vercel CLI**
-```bash
-npm install -g vercel
-```
-
-2. **Deploy to Vercel**
-```bash
-# Windows
-deploy-vercel.bat
-
-# PowerShell
-./deploy-vercel.ps1
-
-# Or manually:
-vercel --prod
-```
-
-3. **Your app will be available at**: `https://your-domain.vercel.app`
+1. **Go to [render.com](https://render.com)**
+2. **Sign up/Login** with your GitHub account
+3. **Click "New +" → "Web Service"**
+4. **Connect your GitHub repository**
+5. **Configure:**
+   - **Name**: `yolov10-backend`
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `python start.py`
+   - **Plan**: Free (or paid for better performance)
+6. **Your app will be available at**: `https://your-app-name.onrender.com`
 
 ### Option 2: Local Development
 For local development and testing:
@@ -137,16 +130,15 @@ cv/
 
 ## 🚀 Deployment
 
-### Vercel Deployment (Production)
-```bash
-# Install Vercel CLI
-npm install -g vercel
+### Render.com Deployment (Production)
+Your app is already deployed on Render.com at: `https://yolov10-backend.onrender.com`
 
-# Deploy
-vercel --prod
-```
-
-For detailed deployment instructions, see [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md)
+For new deployments:
+1. **Go to [render.com](https://render.com)**
+2. **Connect your GitHub repository**
+3. **Configure as Web Service**
+4. **Build Command**: `pip install -r requirements.txt`
+5. **Start Command**: `python start.py`
 
 ### Local Development
 
